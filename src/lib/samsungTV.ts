@@ -79,12 +79,23 @@ export class SamsungTVClient {
           console.error('❌ Erro WebSocket:', error);
           this.isConnected = false;
           
-          // Mensagem de erro mais clara
-          let errorMsg = 'Falha na conexão. Verifique:\n';
+          // Mensagem de erro detalhada
+          let errorMsg = '❌ Falha na conexão WebSocket\n\n';
+          
+          if (isHTTPS) {
+            errorMsg += '🔐 CERTIFICADO SSL BLOQUEADO\n\n';
+            errorMsg += 'Navegadores HTTPS bloqueiam certificados auto-assinados de TVs.\n\n';
+            errorMsg += '✅ SOLUÇÃO:\n';
+            errorMsg += `1. Abra em nova aba: https://${this.ip}:8002\n`;
+            errorMsg += '2. Aceite o aviso de segurança\n';
+            errorMsg += '3. Volte aqui e tente conectar novamente\n\n';
+          }
+          
+          errorMsg += '📋 Checklist:\n';
           errorMsg += '• TV está ligada?\n';
-          errorMsg += '• Mesmo Wi-Fi que o celular?\n';
-          errorMsg += '• IP está correto?\n';
-          errorMsg += '• Porta 8002 está aberta na TV?';
+          errorMsg += '• Mesma rede Wi-Fi?\n';
+          errorMsg += `• IP correto? (${this.ip})\n`;
+          errorMsg += '• Aceitar solicitação que aparece na TV';
           
           reject(new Error(errorMsg));
         };

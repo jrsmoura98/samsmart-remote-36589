@@ -63,7 +63,32 @@ const Devices = () => {
       }
     } catch (error: any) {
       console.error('Erro na conexão:', error);
-      toast.error(error.message || 'Não foi possível conectar à TV', { id: loadingToast });
+      toast.dismiss(loadingToast);
+      
+      // Mostrar erro detalhado em modal se for erro de certificado
+      if (error.message.includes('CERTIFICADO')) {
+        toast.error(
+          <div className="text-left space-y-2">
+            <div className="font-semibold">🔐 Certificado SSL Bloqueado</div>
+            <div className="text-sm">
+              <p>1. Abra em nova aba:</p>
+              <a 
+                href={`https://${tv.ip}:8002`} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-accent underline block my-1"
+              >
+                https://{tv.ip}:8002
+              </a>
+              <p>2. Aceite o aviso de segurança</p>
+              <p>3. Volte aqui e conecte novamente</p>
+            </div>
+          </div>,
+          { duration: 10000 }
+        );
+      } else {
+        toast.error(error.message || 'Não foi possível conectar à TV', { duration: 8000 });
+      }
     }
   };
 
@@ -216,7 +241,8 @@ const Devices = () => {
               <li>2. TV e celular devem estar na <strong>mesma rede Wi-Fi</strong></li>
               <li>3. Encontre o IP da TV em: <strong>Menu → Rede → Status</strong></li>
               <li>4. Adicione o IP manualmente acima</li>
-              <li>5. <strong>Aceite a solicitação</strong> que aparecerá na TV</li>
+              <li>5. <strong className="text-accent">IMPORTANTE:</strong> Abra <code className="bg-muted px-1 rounded">https://[IP-DA-TV]:8002</code> em nova aba e aceite o certificado SSL</li>
+              <li>6. <strong>Aceite a solicitação</strong> que aparecerá na TV</li>
             </ol>
           </Card>
           
