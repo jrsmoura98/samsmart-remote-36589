@@ -1,0 +1,158 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    --background: 220 13% 91%;
+    --foreground: 210 56% 12%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 210 56% 12%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 210 56% 12%;
+
+    --primary: 210 56% 12%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 210 40% 20%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 220 13% 85%;
+    --muted-foreground: 210 20% 40%;
+
+    --accent: 217 91% 60%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 220 13% 80%;
+    --input: 220 13% 85%;
+    --ring: 210 56% 12%;
+
+    --radius: 1rem;
+
+    /* Gradientes personalizados */
+    --gradient-primary: linear-gradient(135deg, hsl(210, 56%, 12%), hsl(210, 56%, 20%));
+    --gradient-card: linear-gradient(145deg, hsl(0, 0%, 100%), hsl(220, 13%, 96%));
+    --gradient-glass: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+    
+    /* Sombras personalizadas */
+    --shadow-soft: 0 4px 20px rgba(13, 28, 46, 0.08);
+    --shadow-medium: 0 8px 30px rgba(13, 28, 46, 0.12);
+    --shadow-strong: 0 12px 40px rgba(13, 28, 46, 0.16);
+    
+    /* Transições */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+
+  .dark {
+    --background: 210 56% 8%;
+    --foreground: 220 13% 91%;
+
+    --card: 210 56% 12%;
+    --card-foreground: 220 13% 91%;
+
+    --popover: 210 56% 12%;
+    --popover-foreground: 220 13% 91%;
+
+    --primary: 220 13% 91%;
+    --primary-foreground: 210 56% 12%;
+
+    --secondary: 210 40% 20%;
+    --secondary-foreground: 220 13% 91%;
+
+    --muted: 210 40% 16%;
+    --muted-foreground: 220 13% 60%;
+
+    --accent: 217 91% 60%;
+    --accent-foreground: 210 56% 12%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 220 13% 91%;
+
+    --border: 210 40% 20%;
+    --input: 210 40% 20%;
+    --ring: 220 13% 91%;
+
+    --gradient-primary: linear-gradient(135deg, hsl(210, 56%, 8%), hsl(210, 56%, 16%));
+    --gradient-card: linear-gradient(145deg, hsl(210, 56%, 12%), hsl(210, 56%, 10%));
+    --gradient-glass: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+    
+    --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.3);
+    --shadow-medium: 0 8px 30px rgba(0, 0, 0, 0.4);
+    --shadow-strong: 0 12px 40px rgba(0, 0, 0, 0.5);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+
+  /* Utility classes */
+  .glass-card {
+    @apply bg-white/10 backdrop-blur-md border border-white/20;
+  }
+
+  .gradient-primary {
+    background: var(--gradient-primary);
+  }
+
+  .gradient-card {
+    background: var(--gradient-card);
+  }
+
+  .shadow-soft {
+    box-shadow: var(--shadow-soft);
+  }
+
+  .shadow-medium {
+    box-shadow: var(--shadow-medium);
+  }
+
+  .shadow-strong {
+    box-shadow: var(--shadow-strong);
+  }
+
+  .transition-smooth {
+    transition: var(--transition-smooth);
+  }
+
+  .transition-bounce {
+    transition: var(--transition-bounce);
+  }
+}
+
+@layer components {
+  .remote-button {
+    @apply flex items-center justify-center rounded-2xl transition-smooth active:scale-95 shadow-soft;
+  }
+
+  .remote-button-primary {
+    @apply remote-button bg-gradient-to-br from-primary to-secondary text-primary-foreground hover:shadow-medium;
+  }
+
+  .remote-button-secondary {
+    @apply remote-button bg-card text-card-foreground hover:bg-muted;
+  }
+
+  .remote-button-icon {
+    @apply remote-button w-14 h-14 bg-card text-foreground hover:bg-accent hover:text-accent-foreground;
+  }
+
+  .app-shortcut {
+    @apply flex flex-col items-center gap-2 p-3 rounded-xl bg-card hover:bg-muted transition-smooth cursor-pointer active:scale-95;
+  }
+}
