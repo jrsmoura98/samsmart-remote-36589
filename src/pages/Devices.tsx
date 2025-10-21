@@ -9,10 +9,12 @@ import { Tv, Wifi, RefreshCw, ChevronRight, Plus, Sparkles } from 'lucide-react'
 import { toast } from 'sonner';
 import { Capacitor } from '@capacitor/core';
 import { quickScanForTVs, type DiscoveredTV } from '@/lib/networkScanner';
+import { TV_BRANDS } from '@/lib/tvBrands';
 
 const Devices = () => {
   const navigate = useNavigate();
-  const { availableTVs, setAvailableTVs, connectToTV, isScanning, setIsScanning } = useApp();
+  const { availableTVs, setAvailableTVs, connectToTV, isScanning, setIsScanning, selectedBrand } = useApp();
+  const currentBrand = TV_BRANDS.find(b => b.id === selectedBrand);
   const [showManualInput, setShowManualInput] = useState(false);
   const [manualIP, setManualIP] = useState('');
   const [manualName, setManualName] = useState('');
@@ -142,9 +144,17 @@ const Devices = () => {
     <div className="min-h-screen p-6 pb-24">
       <div className="max-w-2xl mx-auto space-y-6 animate-fade-in">
         {/* Header */}
-        <div className="text-center space-y-2">
-          <h1 className="text-3xl font-bold text-foreground">Dispositivos</h1>
-          <p className="text-muted-foreground">Selecione sua TV Samsung</p>
+        <div className="text-center space-y-3">
+          <div className="inline-flex items-center gap-3">
+            <div className={`w-12 h-12 rounded-xl ${currentBrand?.gradient} flex items-center justify-center shadow-lg`}>
+              <Tv className="w-6 h-6 text-white" />
+            </div>
+            <div className="text-left">
+              <h1 className="text-3xl font-bold text-foreground">{currentBrand?.name}</h1>
+              <p className="text-sm text-muted-foreground">{currentBrand?.description}</p>
+            </div>
+          </div>
+          <p className="text-muted-foreground">Selecione sua TV para conectar</p>
         </div>
 
         {/* Scan Button */}
